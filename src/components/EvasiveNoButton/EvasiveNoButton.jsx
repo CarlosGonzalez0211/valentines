@@ -2,12 +2,23 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './EvasiveNoButton.css';
 
+const noMessages = [
+    { title: 'System Error', text: "Application requires a 'Yes' input to proceed.", btn: 'Retry' },
+    { title: 'Are you sure?', text: 'Think about it again... carefully.', btn: 'Fine, let me reconsider' },
+    { title: 'Come on, pleaseeee', text: "You're really gonna break my heart like that?", btn: 'Okay okay' },
+    { title: 'Wrong answer!', text: "That button doesn't actually work. Try the other one.", btn: 'Got it' },
+    { title: 'Nice try', text: "But 'No' is not a valid option in this application.", btn: 'Understood' },
+    { title: 'Error 404', text: 'Rejection not found. Only love allowed here.', btn: 'Try again' },
+];
+
 const EvasiveNoButton = ({ isVisible }) => {
     const buttonRef = useRef(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isInitialized, setIsInitialized] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState(noMessages[0]);
     const jumpTimeout = useRef(null);
+    const messageIndex = useRef(0);
 
     const getRandomPosition = useCallback((currentPos) => {
         const padding = 80;
@@ -87,6 +98,8 @@ const EvasiveNoButton = ({ isVisible }) => {
     }, [jump, isVisible]);
 
     const handleClick = () => {
+        setModalMessage(noMessages[messageIndex.current % noMessages.length]);
+        messageIndex.current++;
         setShowModal(true);
         jump();
     };
@@ -119,9 +132,9 @@ const EvasiveNoButton = ({ isVisible }) => {
             {showModal && (
                 <div className="error-modal-overlay" onClick={closeModal}>
                     <div className="error-modal" onClick={e => e.stopPropagation()}>
-                        <h3>System Error</h3>
-                        <p>Application requires a 'Yes' input to proceed.</p>
-                        <button onClick={closeModal}>Retry</button>
+                        <h3>{modalMessage.title}</h3>
+                        <p>{modalMessage.text}</p>
+                        <button onClick={closeModal}>{modalMessage.btn}</button>
                     </div>
                 </div>
             )}
