@@ -1,0 +1,171 @@
+.envelope-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.intro-text {
+    font-family: var(--font-handwritten);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    transition: opacity 0.5s ease;
+    text-align: center;
+}
+
+.intro-text.fade-out {
+    opacity: 0;
+}
+
+.envelope {
+    position: relative;
+    width: 800px;
+    height: 520px;
+    background-color: var(--primary-lighter);
+    /* Bottom flap color */
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.envelope:hover:not(.open) {
+    transform: translateY(-20px);
+}
+
+/* Base envelope shape using flaps */
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 400px solid var(--primary-light);
+    border-right: 400px solid transparent;
+    border-top: 260px solid transparent;
+    border-bottom: 260px solid var(--primary-light);
+    z-index: 2;
+}
+
+.envelope::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 400px solid transparent;
+    border-right: 400px solid var(--primary-light);
+    border-top: 260px solid transparent;
+    border-bottom: 260px solid var(--primary-light);
+    z-index: 2;
+}
+
+.pocket {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 400px solid transparent;
+    border-right: 400px solid transparent;
+    border-bottom: 260px solid var(--primary-lighter);
+    z-index: 3;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 400px solid transparent;
+    border-right: 400px solid transparent;
+    border-top: 265px solid var(--primary);
+    border-bottom: 265px solid transparent;
+    transform-origin: top;
+    transition: transform 0.6s ease;
+    z-index: 4;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.letter-container {
+    position: absolute;
+    top: 10px;
+    width: 96%;
+    height: 110%;
+    /* Makes the card taller than the envelope pocket */
+    z-index: 2;
+    transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter-container.rise {
+    transform: translateY(-65%);
+    /* Adjust rise so it goes "down" less and stays balanced */
+    z-index: 5;
+}
+
+.click-hint {
+    margin-top: 4rem;
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    color: var(--primary);
+    animation: pulse 2s infinite;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 500px) {
+    .envelope {
+        width: 320px;
+        height: 220px;
+    }
+
+    .envelope::before,
+    .envelope::after {
+        border-left-width: 160px;
+        border-right-width: 160px;
+        border-top-width: 110px;
+        border-bottom-width: 110px;
+    }
+
+    .pocket {
+        border-left-width: 160px;
+        border-right-width: 160px;
+        border-bottom-width: 110px;
+    }
+
+    .flap {
+        border-left-width: 160px;
+        border-right-width: 160px;
+        border-top-width: 110px;
+        border-bottom-width: 110px;
+    }
+}
