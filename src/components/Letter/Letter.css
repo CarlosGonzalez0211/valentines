@@ -54,17 +54,17 @@
 
 .question {
     font-family: var(--font-ui);
-    font-size: 4.8rem;
+    font-size: 4.2rem;
     font-weight: 800;
     color: var(--primary-dark);
-    margin-bottom: 4rem;
-    line-height: 1.1;
+    margin-bottom: 3rem;
+    line-height: 1.2;
     max-width: 90%;
 }
 
 .button-group {
     display: flex;
-    gap: 6rem;
+    gap: 5rem;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -73,7 +73,7 @@
 .yes-btn {
     background: var(--yes-green);
     color: var(--white);
-    padding: 1.5rem 4.5rem;
+    padding: 1.8rem 5rem;
     font-size: 2rem;
     font-weight: 700;
     border-radius: 40px;
@@ -83,6 +83,22 @@
 .yes-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 12px 30px rgba(46, 204, 113, 0.4);
+}
+
+.no-btn-placeholder {
+    background: var(--no-red);
+    color: var(--white);
+    padding: 1.8rem 5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    border-radius: 40px;
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.no-btn-placeholder.hidden {
+    visibility: hidden;
 }
 
 .success-message {

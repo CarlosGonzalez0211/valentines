@@ -10,8 +10,9 @@ const EvasiveNoButton = ({ isVisible }) => {
     const jumpTimeout = useRef(null);
 
     const getRandomPosition = useCallback((currentPos) => {
-        const padding = 100;
-        const minJump = 350;
+        const padding = 80;
+        const minJump = 200;
+        const maxJump = 500;
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
@@ -27,7 +28,7 @@ const EvasiveNoButton = ({ isVisible }) => {
                 Math.pow(newX - currentPos.x, 2) + Math.pow(newY - currentPos.y, 2)
             );
             attempts++;
-        } while ((distance < minJump) && attempts < 50);
+        } while ((distance < minJump || distance > maxJump) && attempts < 50);
 
         return { x: newX, y: newY };
     }, []);
@@ -38,23 +39,20 @@ const EvasiveNoButton = ({ isVisible }) => {
         jumpTimeout.current = setTimeout(() => {
             setPosition(prev => getRandomPosition(prev));
             jumpTimeout.current = null;
-        }, 50);
+        }, 150);
     }, [getRandomPosition]);
 
     useEffect(() => {
         if (isVisible) {
-            // Find the Yes button to position No button next to it initially
-            const yesBtn = document.querySelector('.yes-btn');
-            if (yesBtn) {
-                const rect = yesBtn.getBoundingClientRect();
-                // Position it side-by-side with a consistent gap
-                // This ensures it starts inside the card's horizontal span
+            // Position over the placeholder so it appears in the correct spot inside the card
+            const placeholder = document.querySelector('.no-btn-placeholder');
+            if (placeholder) {
+                const rect = placeholder.getBoundingClientRect();
                 setPosition({
-                    x: rect.left + rect.width / 2 + 140, // Perfectly aligned with the new 5rem gap
+                    x: rect.left + rect.width / 2,
                     y: rect.top + rect.height / 2
                 });
             } else {
-                // Fallback to center area
                 setPosition({ x: window.innerWidth / 2 + 200, y: window.innerHeight / 2 + 100 });
             }
             setIsInitialized(true);
@@ -76,7 +74,7 @@ const EvasiveNoButton = ({ isVisible }) => {
                 Math.pow(e.clientY - buttonCenterY, 2)
             );
 
-            if (distance < 150) {
+            if (distance < 120) {
                 jump();
             }
         };

@@ -9,10 +9,10 @@ const Letter = ({ isOpen, onReset }) => {
 
     useEffect(() => {
         if (isOpen) {
-            // Delay showing the No button until the letter rising animation is mostly complete
+            // Delay activating the evasive No button until the letter rise animation is complete
             const timer = setTimeout(() => {
                 setShowNoButton(true);
-            }, 1000);
+            }, 1700);
             return () => clearTimeout(timer);
         } else {
             setShowNoButton(false);
@@ -43,6 +43,7 @@ const Letter = ({ isOpen, onReset }) => {
                         <h1 className="question">Will you be my<br />Valentine?</h1>
                         <div className="button-group">
                             <button className="yes-btn" onClick={handleYes}>Yes</button>
+                            <div className={`no-btn-placeholder ${showNoButton ? 'hidden' : ''}`}>No</div>
                             <EvasiveNoButton isVisible={showNoButton} />
                         </div>
                     </>

@@ -100,17 +100,15 @@
 
 .letter-container {
     position: absolute;
-    top: 10px;
-    width: 96%;
-    height: 110%;
-    /* Makes the card taller than the envelope pocket */
+    top: 20px;
+    width: 90%;
+    height: 95%;
     z-index: 2;
     transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .letter-container.rise {
-    transform: translateY(-65%);
-    /* Adjust rise so it goes "down" less and stays balanced */
+    transform: translateY(-50%);
     z-index: 5;
 }
 
