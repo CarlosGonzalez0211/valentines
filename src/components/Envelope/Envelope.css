@@ -108,7 +108,7 @@
 }
 
 .letter-container.rise {
-    transform: translateY(-50%);
+    transform: translateY(-40%);
     z-index: 5;
 }
 
